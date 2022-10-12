@@ -44,12 +44,6 @@ Or
 yarn install
 ```
 
-> **Note**: `ReactPlay` runs on React 18. However, some of our dependencies are yet to upgrade to version 18. So please use the following command when you face difficulties installing the dependencies.
-
-```bash
-npm install --legacy-peer-deps
-```
-
 ### ⛓️ Create a `.env` file at the root of your project folder with the following content
 
 ```bash
@@ -71,35 +65,6 @@ yarn start
 ```
 
 It runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes. You may also see any lint errors in the console.
-
-### 🧱 Build the App for Production
-
-Use the following command to build the app for production:
-
-```bash
-npm run build
-```
-
-Or
-
-```bash
-yarn build
-```
-
-It builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
-
-### 🚀 Deploy
-
-You can deploy the app to `Vercel` or `Netlify` with a single click.
-
-<a href="https://vercel.com/new/project?template=https://github.com/iamkelv/africommerce/">
-<img src="https://vercel.com/button" height="37.5px" />
-</a>
-<a href="https://app.netlify.com/start/deploy?repository=https://github.com/iamkelv/africommerce/">
-<img src="https://www.netlify.com/img/deploy/button.svg" height="37.5px" />
-</a>
 
 ## 🤝 Contributing to `Africommerce`
 
