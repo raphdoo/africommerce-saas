@@ -4,42 +4,40 @@ const Schema = mongoose.Schema
 
 //modelling the leader schema
 const UserSchema = new Schema({
-    username:{
+    username: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    password: {
         type: String,
         default: '',
         required: true
     },
-    password:{
+    firstname: {
+        type: String,
+        required: true
+    },
+    lastname: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    phonenumber: {
         type: String,
         default: '',
         required: true
     },
-    firstname:{
-        type: String,
-        default: '',
-        required: true
-    },
-    lastname:{
-        type: String,
-        default: '',
-        required: true
-    },
-    email:{
-        type: String,
-        default: '',
-        required: true
-    },
-    phonenumber:{
-        type: String,
-        default: '',
-        required: true
-    },
-    address:{
+    address: {
         type: String,
         default: ''
     },
-    usertype:{ 
-        type: String, 
+    usertype: {
+        type: String,
         enum: ['business', 'user'],
         default: 'user'
     },
@@ -47,8 +45,8 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     }
-},{
-    timestamps: true 
+}, {
+    timestamps: true
 })
 
 const users = mongoose.model("User", UserSchema) //creating the model
