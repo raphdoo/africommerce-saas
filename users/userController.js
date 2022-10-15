@@ -27,8 +27,37 @@ async function createUser(req, res) {
         msg: "Registration successful!",
         data: user
     })
+};
+
+async function updateUserById (req, res) {
+    const id = req.params.id;
+    const bodyToUpdate = req.body;
+
+    let user = await userModel.findByIdAndUpdate(id, bodyToUpdate, {new: true});
+
+    if (!user) {
+        return res.status(404).send("User does not exit")
+    }
+    res.status(201).json({
+        msg: "User updated Successfully",
+        data: user
+    })
+};
+
+async function deleteUserById(req, res) {
+    const id = req.params.id;
+
+    const user = await userModel.findByIdAndDelete({_id: id})
+
+    res.status(201).json({
+        status: true,
+        user
+    })
 }
 
+
 module.exports = {
-    createUser
+    createUser,
+    updateUserById,
+    deleteUserById
 }
