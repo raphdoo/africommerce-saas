@@ -38,8 +38,9 @@ const UserSchema = new Schema({
         type: String,
         default: ''
     },
-    usertype:{
-        type: { type: String, enum: ['business', 'user']},
+    usertype:{ 
+        type: String, 
+        enum: ['business', 'user'],
         default: 'user'
     },
     admin: {
@@ -49,7 +50,6 @@ const UserSchema = new Schema({
 },{
     timestamps: true 
 })
-
 
 const users = mongoose.model("User", UserSchema) //creating the model
 
