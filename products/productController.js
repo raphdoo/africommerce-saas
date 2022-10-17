@@ -1,5 +1,55 @@
 const Product = require('../model/products')
 
+const createProduct = async (req, res, next) => {
+  try {
+    /**
+     * create new product with required parameters
+     */
+    const productToSave = new productModel({
+      name: req.body.name,
+      brand_name: req.body.brand_name,
+      category: req.body.category,
+      Quantity: req.body.Quantity,
+      price: req.body.price,
+      desc: req.body.desc,
+      owner_id: req.user.id,
+      rating: req.body.rating,
+      images: req.body.images,
+    })
+
+    /**
+     * check for optional parameters and add to
+     * product if present
+     */
+    if (req.body.product_details) {
+      productToSave.product_details = req.body.product_details
+    }
+
+    if (req.body.warranty) {
+      productToSave.warranty = req.body.warranty
+    }
+
+    /**
+     * Save product
+     */
+    const savedProduct = await productToSave.save()
+
+    /**
+     * Send a response to the client
+     */
+    res.status(201).json({
+      status: true,
+      product: savedProduct,
+    })
+  } catch (error) {
+    /**
+     * In case of error
+     * send to error handling middleware
+     */
+    next(error)
+  }
+}
+
 const getAllProducts = async (req,res) => {
     try {
         const products = await Product.find()
@@ -50,6 +100,7 @@ const deleteProduct = async (req,res) => {
 }
 
 module.exports = {
+    createProduct,
     getAllProducts,
     getProduct,
     updateProduct,
