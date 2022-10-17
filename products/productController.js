@@ -10,16 +10,7 @@ const getAllProducts = async (req,res) => {
     
 }
 
-const createProduct = async (req,res) => {
-    try {
-        const product = await Product.create(req.body)
-        res.status(201).json({product})
-    } catch (error) {
-        console.log(error);
-    }
-    
 
-}
 
 const getProduct = async (req,res) => {
     try {
@@ -60,7 +51,6 @@ const deleteProduct = async (req,res) => {
 
 module.exports = {
     getAllProducts,
-    createProduct,
     getProduct,
     updateProduct,
     deleteProduct
