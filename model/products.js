@@ -21,7 +21,7 @@ const ProductSchema = new Schema(
       type: String,
       required: [true, "please provide product category!"],
     },
-    Quantity: {
+    quantity: {
       type: Number,
       required: [true, "product quantity required!"],
     },

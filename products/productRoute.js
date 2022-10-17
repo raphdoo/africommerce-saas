@@ -1,12 +1,16 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose")
-
-const products = require("../model/products")
 
 const productRoute = express.Router();
 
-productRoute.use(bodyParser.json());
+// productRoute.use(bodyParser.json());
+
+const {
+    createProduct,
+    getProduct,
+    getAllProducts,
+    updateProduct,
+    deleteProduct
+} = require("./productController")
 
 productRoute.route("/")
     .all((req, res, next) => {
@@ -14,8 +18,11 @@ productRoute.route("/")
         res.setHeader("Content-Type", "application/json")
         next()
     })
-    .get((req, res, next) => {
+    .post(createProduct)
+    .get(getAllProducts)
 
-    })
+productRoute.route('/:id')
+    .put(updateProduct)
+    .get(getProduct)
 
 module.exports = productRoute;
