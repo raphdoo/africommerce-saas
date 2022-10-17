@@ -29,11 +29,29 @@ async function createUser(req, res) {
     })
 };
 
-async function updateUserById (req, res) {
+
+async function getAllUser(req, res) {
+    const user = await userModel.find({});
+    res.status(200).json({
+        msg: "all users",
+        data: user
+    })
+}
+
+async function getOneUser(req, res) {
+    const userId = req.params.id
+    const user = await userModel.findById(userId)
+    if (!user) {
+        return res.status(404).send("User with this id does not exist!")
+    }
+    res.status(200).send(user)
+}
+
+async function updateUserById(req, res) {
     const id = req.params.id;
     const bodyToUpdate = req.body;
 
-    let user = await userModel.findByIdAndUpdate(id, bodyToUpdate, {new: true});
+    let user = await userModel.findByIdAndUpdate(id, bodyToUpdate, { new: true });
 
     if (!user) {
         return res.status(404).send("User does not exit")
@@ -47,7 +65,15 @@ async function updateUserById (req, res) {
 async function deleteUserById(req, res) {
     const id = req.params.id;
 
-    const user = await userModel.findByIdAndDelete({_id: id})
+    const user = await userModel.findById(id)
+    if (!user) {
+        return res.status(404).send("Can't delete! user does not exist!")
+    }
+    user.delete()
+    res.json({
+        status: 200,
+        msg: "User deleted successfully!"
+    })
 
     res.status(201).json({
         status: true,
@@ -59,5 +85,7 @@ async function deleteUserById(req, res) {
 module.exports = {
     createUser,
     updateUserById,
-    deleteUserById
+    deleteUserById,
+    getAllUser,
+    getOneUser
 }
