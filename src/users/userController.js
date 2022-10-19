@@ -1,6 +1,6 @@
-const userModel = require("../model/users")
+const userModel = require("../../model/users")
 const { body, validationResult } = require("express-validator")
-const { hashPassword } = require("../config/helper")
+const { hashPassword } = require("../../config/helper")
 
 
 async function createUser(req, res) {
@@ -65,7 +65,7 @@ async function updateUserById(req, res) {
 async function deleteUserById(req, res) {
     const id = req.params.id;
 
-    const user = await userModel.findById(id)
+    const user = await userModel.findByIdAndDelete(id)
     if (!user) {
         return res.status(404).send("Can't delete! user does not exist!")
     }
@@ -73,11 +73,6 @@ async function deleteUserById(req, res) {
     res.json({
         status: 200,
         msg: "User deleted successfully!"
-    })
-
-    res.status(201).json({
-        status: true,
-        user
     })
 }
 
