@@ -1,8 +1,11 @@
 const express = require("express");
 
+const passport = require('passport')
+
 const productRoute = express.Router();
 
-// productRoute.use(bodyParser.json());
+// productRoute.use(passport.authenticate('jwt', { session: false }))
+
 
 const {
     createProduct,
