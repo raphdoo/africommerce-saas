@@ -7,7 +7,7 @@ const {
   getAllUser,
   getOneUser
 } = require("./userController")
-const { validateUser, validate } = require("../middleware/userValidation")
+const { validateUser, validate } = require("../../middleware/userValidation")
 
 
 /* GET users listing. */
