@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
+var passport = require("passport")
+const authenticate = require('../../middleware/authenticate')
 const {
   createUser,
   updateUserById,
   deleteUserById,
   getAllUser,
-  getOneUser
+  getOneUser,
+  loginUser,
+  logoutUser
 } = require("./userController")
 const { validateUser, validate } = require("../../middleware/userValidation")
 
@@ -13,8 +17,19 @@ const { validateUser, validate } = require("../../middleware/userValidation")
 /* GET users listing. */
 router
   .route('/')
-  .post(validateUser(), validate, createUser)
   .get(getAllUser)
+
+router
+  .route('/signup')
+  .post(validateUser(), validate, createUser)
+
+ router 
+  .route('/loginuser')
+  .post(loginUser)
+
+  router 
+  .route('/logout')
+  .get(authenticate.verifyUser, logoutUser)
 
 
 router
