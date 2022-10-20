@@ -5,7 +5,7 @@ const authRoute = require('../src/auth/authRouter')
 
 const passport = require('passport')
 require('../src/auth/passport')
-
+const { isLoggedIn } = require('../middleware/authenicate')
 
 const rootRouter = express.Router();
 
@@ -15,7 +15,7 @@ rootRouter.get('/', function (req, res, next) {
 });
 
 rootRouter.use('/users', userRoute);
-rootRouter.use('/products', passport.authenticate('jwt', { session: false }), productRoute)
+rootRouter.use('/products', isLoggedIn, productRoute)
 rootRouter.use('/auth', authRoute)
 
 

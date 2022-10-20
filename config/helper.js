@@ -9,20 +9,22 @@ async function hashPassword(password) {
 }
 
 async function verifyPassword(plainPassword, hashedPassword) {
-    return await argon2.verify(hashPassword, plainPassword)
+    return await argon2.verify(hashedPassword, plainPassword)
 }
 
 async function generateJwtToken(payload) {
     const options = {
         // exp: new Date().setDate(new Date().getDate() + 1),
         // iat: new Date().getTime(),
-        secret: config.jwtSecret
+        secret: config.jwtSecret,
+        userId: payload
     }
-    return jwt.sign(payload, options.secret, { expiresIn: '60mins' })
+    return jwt.sign(options, payload)
 }
 
 async function verifyJwtToken(token) {
-    return jwt.verify(token, { secret: config.jwtSecret })
+    const verify = await jwt.verify(token, config.jwtSecret)
+    return verify
 }
 
 async function validateUser(idenity, password) {

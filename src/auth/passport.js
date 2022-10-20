@@ -9,7 +9,7 @@ const userModel = require('../../model/users')
 const config = require('../../config/config')
 
 console.log("I'm outside passport")
-passport.use(new JwtStrategy({
+module.exports = passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.jwtSecret,
 },
