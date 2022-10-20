@@ -1,8 +1,8 @@
 const express = require("express");
 
-const passport = require('passport')
-
 const productRoute = express.Router();
+const authenticate = require('../../middleware/authenticate')
+
 
 // productRoute.use(passport.authenticate('jwt', { session: false }))
 
@@ -14,6 +14,7 @@ const {
     updateProduct,
     deleteProduct
 } = require("./productController")
+const { validateProduct, validate } = require("../../middleware/productValidation")
 
 productRoute.route("/")
     .all((req, res, next) => {
@@ -21,7 +22,8 @@ productRoute.route("/")
         res.setHeader("Content-Type", "application/json")
         next()
     })
-    .post(createProduct)
+
+    .post(validateProduct(), validate, createProduct)
     .get(getAllProducts)
 
 productRoute.route('/:id')

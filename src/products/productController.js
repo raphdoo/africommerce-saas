@@ -12,7 +12,7 @@ const createProduct = async (req, res, next) => {
         quantity: req.body.quantity,
         price: req.body.price,
         desc: req.body.desc,
-        owner_id: req.body.owner_id,
+        owner_id: req.user.id,
         rating: req.body.rating,
         images: req.body.images,
     })

@@ -1,7 +1,9 @@
 const userModel = require("../../model/users")
+var passport = require("passport")
 const { body, validationResult } = require("express-validator")
-const { hashPassword } = require("../../config/helper")
+const { hashPassword, validateUser } = require("../../config/helper")
 
+const authenticate = require('../../middleware/authenticate')
 
 async function createUser(req, res) {
     const { firstname, lastname, username, email, password, phonenumber } = req.body;
@@ -29,6 +31,30 @@ async function createUser(req, res) {
     })
 };
 
+const loginUser = async (req, res) =>{
+    const { username, password } = req.body
+    const user = await validateUser(username, password)
+    if (!user) {
+        return res.status(401).send("Invalid crendentials!")
+    }
+    var token = authenticate.getToken({_id: user._id})
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.json({success: true, token, status:'You are successfully logged in'})
+}
+
+const logoutUser = async(req, res) =>{
+    try{
+        console.log(req.user)
+        res.clearCookie('jwt')
+        console.log('logout successful')
+        
+        await req.user.save()
+        res.json({status:true, message:'logout successful'})
+    }catch(err){
+        res.status(500).send(err)
+    }
+  }
 
 async function getAllUser(req, res) {
     const user = await userModel.find({});
@@ -79,6 +105,8 @@ async function deleteUserById(req, res) {
 
 module.exports = {
     createUser,
+    loginUser,
+    logoutUser,
     updateUserById,
     deleteUserById,
     getAllUser,
