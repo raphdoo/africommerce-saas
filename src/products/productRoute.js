@@ -14,6 +14,7 @@ const {
     updateProduct,
     deleteProduct
 } = require("./productController")
+const { validateProduct, validate } = require("../../middleware/productValidation")
 
 productRoute.route("/")
     .all((req, res, next) => {
@@ -21,8 +22,9 @@ productRoute.route("/")
         res.setHeader("Content-Type", "application/json")
         next()
     })
-    .post(createProduct)
-    .get(authenticate.verifyUser, getAllProducts)
+
+    .post(validateProduct(), validate, createProduct)
+    .get(getAllProducts)
 
 productRoute.route('/:id')
     .put(updateProduct)
