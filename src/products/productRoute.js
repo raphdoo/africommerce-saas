@@ -14,7 +14,7 @@ const {
     updateProduct,
     deleteProduct
 } = require("./productController")
-const { validateProduct, validate } = require("../middleware/productValidation")
+const { validateProduct, validate } = require("../../middleware/productValidation")
 
 productRoute.route("/")
     .all((req, res, next) => {
