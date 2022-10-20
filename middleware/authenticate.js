@@ -45,3 +45,14 @@ exports.verifyAdmin = async(req, res, next)=>{
         res.json({status: false, err, message: 'you are not authorised'})
     }
 }
+
+exports.verifyUserType = async(req, res, next)=>{
+    try{
+        const user = await User.findOne({_id: req.user._id})
+        if(user.usertype == 'user'){
+        next()
+    }
+    }catch(err){
+        res.json({status: false, err, message: 'you are not authorised'})
+    }
+}
