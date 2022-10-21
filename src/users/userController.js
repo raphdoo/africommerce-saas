@@ -16,7 +16,7 @@ async function createUser(req, res) {
     }
     const newUser = {
         firstname,
-        lastname,
+        lastname, 
         username,
         email,
         password,

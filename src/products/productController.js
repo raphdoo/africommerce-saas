@@ -1,5 +1,5 @@
-const Product = require('../../model/products')
-
+const Product = require('../model/products');
+const moment = require('moment');
 
 const createProduct = async (req, res, next) => {
     /**
@@ -44,12 +44,13 @@ const createProduct = async (req, res, next) => {
 }
 
 const getAllProducts = async (req, res) => {
-    const products = await Product.find()
-    res.status(200).json({ nbHits: products.length, products })
-
+    try {
+        const products = await Product.find().sort({createdAt: -1})
+        res.status(200).json({ nbHits: products.length, products })
+    } catch (error) {
+        console.log(error);
+    }
 }
-
-
 
 const getProduct = async (req, res) => {
     const { id: productID } = req.params// destructured the req.params.id and passed it to var
