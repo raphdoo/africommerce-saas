@@ -1,8 +1,11 @@
 const express = require("express");
 
 const productRoute = express.Router();
+const authenticate = require('../../middleware/authenticate')
 
-// productRoute.use(bodyParser.json());
+
+// productRoute.use(passport.authenticate('jwt', { session: false }))
+
 
 const {
     createProduct,
@@ -11,6 +14,7 @@ const {
     updateProduct,
     deleteProduct
 } = require("./productController")
+const { validateProduct, validate } = require("../../middleware/productValidation")
 
 productRoute.route("/")
     .all((req, res, next) => {
@@ -18,8 +22,9 @@ productRoute.route("/")
         res.setHeader("Content-Type", "application/json")
         next()
     })
-    .post(createProduct)
-    .get(getAllProducts)
+
+    .post(validateProduct(), validate, createProduct)
+    .get(authenticate.verifyUser, getAllProducts)
 
 productRoute.route('/:id')
     .put(updateProduct)

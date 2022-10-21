@@ -1,9 +1,12 @@
 const express = require('express');
-const productRoute = require("../products/productRoute");
-const userRoute = require("../users/users")
+const productRoute = require("../src/products/productRoute");
+const userRoute = require("../src/users/users")
+
+const passport = require('passport')
 
 
 const rootRouter = express.Router();
+
 
 /* GET home page. */
 rootRouter.get('/', function (req, res, next) {
@@ -12,6 +15,7 @@ rootRouter.get('/', function (req, res, next) {
 
 rootRouter.use('/users', userRoute);
 rootRouter.use('/products', productRoute)
+
 
 
 module.exports = rootRouter;

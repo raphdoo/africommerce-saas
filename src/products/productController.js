@@ -12,7 +12,7 @@ const createProduct = async (req, res, next) => {
         quantity: req.body.quantity,
         price: req.body.price,
         desc: req.body.desc,
-        owner_id: req.body.owner_id,
+        owner_id: req.user.id,
         rating: req.body.rating,
         images: req.body.images,
     })
@@ -53,36 +53,31 @@ const getAllProducts = async (req, res) => {
 }
 
 const getProduct = async (req, res) => {
-    try {
-        const { id: productID } = req.params// destructured the req.params.id and passed it to var
-        const product = await Product.findOne({ _id: productID })
-        res.status(200).json({ product })
-    } catch (error) {
-        console.log(error);
-    }
+    const { id: productID } = req.params// destructured the req.params.id and passed it to var
+    const product = await Product.findOne({ _id: productID })
+    res.status(200).json({ product })
+
 }
 
 const updateProduct = async (req, res) => {
     const productID = req.params.id
     const { name, price, quantity, desc } = req.body
-    const product = await Product.findById(productID)
+    const product = await Product.findByIdAndUpdate(productID, req.body, { new: true })
     if (!product) {
         return res.status(404).send("Product to update not found!")
     }
-    product.update({ name, price, quantity, desc })
     res.status(200).json({ msg: 'product updated successfully', product })
 
 
 }
 
 const deleteProduct = async (req, res) => {
-    try {
-        const productID = req.params
-        const product = await Product.findOneAndDelete({ _id: productID })
-        res.status(200).json({ msg: 'product deleted successfully' })
-    } catch (error) {
-        console.log(error);
+    const productID = req.params.id
+    const product = await Product.findOneAndDelete({ _id: productID })
+    if (!product) {
+        return res.status(404).send("Product with this id not found!")
     }
+    res.status(200).json({ msg: 'product deleted successfully' })
 
 
 }
