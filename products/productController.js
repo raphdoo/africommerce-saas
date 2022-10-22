@@ -42,13 +42,34 @@ const createProduct = async (req, res, next) => {
     })
 }
 
+
+
 const getAllProducts = async (req, res) => {
-    try {
-        const products = await Product.find()
-        res.status(200).json({ nbHits: products.length, products })
-    } catch (error) {
-        console.log(error);
+    const { limit, category, sort} = req.query
+    const queryObject = {}
+
+    if (category) {
+        queryObject.category = category
     }
+
+    if (page) {
+        const products =  Product.find({})
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const paginatedProducts = products.slice(startIndex, endIndex)
+        console.log(`Number of entries on page : ${paginatedProducts.length}`);
+        return res.status(200).json({paginatedOrders})
+    }
+    let products = Product.find(queryObject)
+
+    if (sort) {
+        const sortList = sort.split(',').join(' ')
+        products = result.sort(sortList)
+        console.log(sortList);
+    }
+    const allProducts = await products
+    res.status(200).json({ nbHits: allProducts.length, allProducts })
 
 }
 
